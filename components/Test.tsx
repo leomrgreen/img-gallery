@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { Post } from "@/lib/types"; // Importera typerna
+import PostCard from "@/components/ui/post-card";
 
 const PostList = () => {
   const [posts, setPosts] = useState<Post[]>([]); // Typa posts som en array av Post
@@ -31,25 +32,14 @@ const PostList = () => {
   }
 
   return (
-    <div>
+    <div className="w-full">
       <h2>Inlägg</h2>
       {posts.length === 0 ? (
         <p>Inga inlägg att visa.</p>
       ) : (
-        <ul>
+        <ul className="grid grid-cols-3 w-full gap-5">
           {posts.map((post) => (
-            <li key={post.id}>
-              <h3>{post.title}</h3>
-              <p>{new Date(post.created_at).toLocaleDateString()}</p>
-              <p>Författare: {post.author.name}</p>
-              <img
-                src={post.author.profilePicture}
-                className="size-8 rounded-full"
-              />
-              {post.image_url && (
-                <img src={post.image_url} alt="haha" className="size-32" />
-              )}
-            </li>
+            <PostCard post={post} key={post.id} />
           ))}
         </ul>
       )}

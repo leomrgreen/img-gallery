@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import ClerkAuth from "./components/ClerkAuth";
+import Header from "@/components/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,10 +28,10 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden-hidden font-[family-name:var(--font-geist-sans)]`}
         >
-          <ClerkAuth /> {/* Här renderar vi klientkomponenten */}
-          {children}
+          <Header />
+          <main className="mx-auto max-w-[80rem] grid px-2">{children}</main>
         </body>
       </html>
     </ClerkProvider>
