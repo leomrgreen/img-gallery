@@ -3,11 +3,13 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "./card";
 import Image from "next/image";
 import { Skeleton } from "./skeleton";
+import { Badge } from "./badge";
 
 const PostCard = ({ post }: { post: any }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -45,6 +47,9 @@ const PostCard = ({ post }: { post: any }) => {
             <Skeleton className="absolute inset-0 object-cover aspect-square size-full" />
           )}
         </div>
+        <CardFooter>
+          {post.category && <Badge>{post.category}</Badge>}
+        </CardFooter>
       </CardContent>
     </Card>
   );

@@ -46,7 +46,8 @@ export default function UploadForm() {
         title,
         created_at: new Date().toISOString(),
         author,
-        image_url: imageUrl, // Use local state
+        image_url: imageUrl,
+        category: "banana",
       },
     ]);
 
