@@ -6,7 +6,7 @@ export default function ClerkAuth() {
   return (
     <>
       <SignedOut>
-        <SignInButton />
+        <SignInButton mode="modal" />
       </SignedOut>
       <SignedIn>
         <UserButton />

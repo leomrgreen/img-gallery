@@ -3,7 +3,7 @@ import { useUser } from "@clerk/clerk-react";
 import { supabase } from "@/lib/supabase";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormSchema } from "../app/api/schema-";
+import { FormSchema } from "../app/api/schema";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -30,6 +30,7 @@ export default function UploadForm() {
     defaultValues: {
       title: "",
       imageUrl: "",
+      category: "",
     },
   });
 
@@ -39,15 +40,18 @@ export default function UploadForm() {
     profilePicture: user?.imageUrl,
   };
 
-  const onSubmit = async (data: { title: string; imageUrl: string }) => {
-    const { title } = data;
+  const onSubmit = async (data: {
+    title: string;
+    imageUrl: string;
+    category: string;
+  }) => {
+    const { title, category } = data;
     const { data: postData, error } = await supabase.from("posts").insert([
       {
         title,
-        created_at: new Date().toISOString(),
         author,
         image_url: imageUrl,
-        category: "banana",
+        category,
       },
     ]);
 
@@ -72,6 +76,22 @@ export default function UploadForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Title</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter post title" {...field} />
+              </FormControl>
+              <FormDescription>
+                This will be the title of your post.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="category"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Category</FormLabel>
               <FormControl>
                 <Input placeholder="Enter post title" {...field} />
               </FormControl>

@@ -1,10 +1,17 @@
-import UploadForm from "../components/UploadForm";
-import PostList from "@/components/Test";
+"use client";
 
-export default function Home() {
+import MovieSection from "@/components/MovieSection";
+
+const Home = () => {
   return (
-    <section className="grid items-center justify-items-center p-8 pb-20 gap-16 sm:p-20 ">
-      <PostList />
+    <section className="p-6">
+      <h1 className="text-4xl font-bold mb-6">Home page</h1>
+      <MovieSection title="Popular" category="popular" />
+      <MovieSection title="Top ranked movies" category="top_rated" />
+      <MovieSection title="Coming soon" category="upcoming" />
+      <MovieSection title="Now in theatres" category="now_playing" />
     </section>
   );
-}
+};
+
+export default Home;

@@ -13,3 +13,9 @@ export interface Post {
   created_at: string; // Supabase skickar alltid datum som sträng
   author: Author; // Författaren är ett objekt
 }
+
+export type Movie = {
+  id: number;
+  title: string;
+  poster_path: string;
+};
