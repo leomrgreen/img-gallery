@@ -11,10 +11,11 @@ import {
 import Image from "next/image";
 import { Skeleton } from "./ui/skeleton";
 import { Movie } from "@/lib/types";
+import { useRouter } from "next/navigation";
 
 const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
-const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w780";
 
 const MovieSection = ({
   title,
@@ -25,6 +26,7 @@ const MovieSection = ({
 }) => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -53,7 +55,7 @@ const MovieSection = ({
       {loading ? (
         <div className="flex gap-3">
           {Array.from({ length: 5 }).map((_, index) => (
-            <Skeleton key={index} className="w-full aspect-video" />
+            <Skeleton key={index} className="w-full aspect-[3/4.5]" />
           ))}
         </div>
       ) : (
@@ -71,6 +73,9 @@ const MovieSection = ({
               <CarouselItem
                 key={movie.id}
                 className="basis-1/2 sm:basis-1/4 xl:basis-1/5 flex items-center"
+                onClick={() => {
+                  router.push(`/movie/${movie.id}`);
+                }}
               >
                 <Image
                   src={`${IMAGE_BASE_URL}${movie.poster_path}`}
