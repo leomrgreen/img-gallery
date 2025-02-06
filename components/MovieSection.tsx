@@ -12,6 +12,8 @@ import Image from "next/image";
 import { Skeleton } from "./ui/skeleton";
 import { Movie } from "@/lib/types";
 import { useRouter } from "next/navigation";
+import CustomSkeleton from "./CustomSkeleton";
+import Link from "next/link";
 
 const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -54,9 +56,7 @@ const MovieSection = ({
       <h2 className="text-2xl mb-3">{title}</h2>
       {loading ? (
         <div className="flex gap-3">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <Skeleton key={index} className="w-full aspect-[3/4.5]" />
-          ))}
+          <CustomSkeleton />
         </div>
       ) : (
         <Carousel
@@ -70,21 +70,17 @@ const MovieSection = ({
           <CarouselNext className="absolute right-0 z-[2]" />
           <CarouselContent className="h-fit">
             {movies.map((movie) => (
-              <CarouselItem
-                key={movie.id}
-                className="basis-1/2 sm:basis-1/4 xl:basis-1/5 flex items-center"
-                onClick={() => {
-                  router.push(`/movie/${movie.id}`);
-                }}
-              >
-                <Image
-                  src={`${IMAGE_BASE_URL}${movie.poster_path}`}
-                  alt={movie.title}
-                  width={1920}
-                  height={1080}
-                  className="rounded-md h-auto w-full object-contain"
-                />
-              </CarouselItem>
+              <Link href={`/movie/${movie.id}`} key={movie.id} legacyBehavior>
+                <CarouselItem className="basis-1/2 sm:basis-1/4 xl:basis-1/5 flex items-center">
+                  <Image
+                    src={`${IMAGE_BASE_URL}${movie.poster_path}`}
+                    alt={movie.title}
+                    width={1920}
+                    height={1080}
+                    className="rounded-md h-auto w-full object-contain cursor-pointer"
+                  />
+                </CarouselItem>
+              </Link>
             ))}
           </CarouselContent>
         </Carousel>
