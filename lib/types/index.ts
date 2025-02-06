@@ -25,4 +25,6 @@ export type Movie = {
   genres: { id: number; name: string }[];
   production_companies: { id: number; logo_path: string; name: string }[];
   imdb_id: number;
+  release_date: string;
+  runtime: number;
 };

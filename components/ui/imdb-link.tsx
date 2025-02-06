@@ -6,7 +6,7 @@ const IMDB = ({ link }: { link: number }) => {
     <Link
       target="_blank"
       href={`https://www.imdb.com/title/${link}`}
-      className="bg-yellow-400 text-black font-extrabold text-lg w-fit px-3 py-1 rounded-md hover:bg-yellow-300/90 transition-colors"
+      className="bg-yellow-400 text-black font-extrabold text-sm sm:text-xl w-fit px-3 py-1 rounded-md hover:bg-yellow-300/90 transition-colors"
     >
       Read more on IMDb
     </Link>

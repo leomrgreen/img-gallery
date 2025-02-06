@@ -4,7 +4,7 @@ import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { PenSquare } from "lucide-react";
+import { PenSquare, Tv } from "lucide-react";
 
 const Header = () => {
   const pathname = usePathname();
@@ -17,22 +17,32 @@ const Header = () => {
       <nav className="mx-auto max-w-7xl">
         <div className="relative flex items-center justify-between">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              <PenSquare className="h-6 w-6" />
-              <span className="font-bold text-xl">BlogApp</span>
+            <Link href="/" className="flex items-center gap-1">
+              <Tv className="size-6" />
+              <span className="text-xl ">Movie Gallery</span>
             </Link>
           </div>
           <div className="flex items-center space-x-4">
             <SignedIn>
               <Link
-                href="/post"
+                href="/discover"
                 className={`text-sm font-medium transition-colors hover:text-primary ${
                   pathname === "/post"
                     ? "text-primary"
                     : "text-muted-foreground"
                 }`}
               >
-                Create Post
+                Discover
+              </Link>
+              <Link
+                href="/top"
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  pathname === "/post"
+                    ? "text-primary"
+                    : "text-muted-foreground"
+                }`}
+              >
+                Top 100
               </Link>
               <Link
                 href="/"

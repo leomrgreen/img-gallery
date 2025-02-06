@@ -9,6 +9,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Movie } from "@/lib/types";
+import { formatRuntime, getReleaseYear } from "@/lib/utils";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -46,7 +47,7 @@ const SingleMoviePage = () => {
   }, [id]);
 
   return (
-    <div className="w-full relative max-w-[70rem] mx-auto mt-5 grid gap-3">
+    <div className="w-full relative max-w-[70rem] mx-auto mt-5 grid gap-4">
       {isLoading && (
         <>
           <Skeleton className="w-[30%] h-10" />
@@ -57,6 +58,31 @@ const SingleMoviePage = () => {
             <Skeleton className="w-full h-4" />
             <Skeleton className="w-[90%] h-4" />
           </div>
+          <div className="grid grid-cols-2">
+            <div className="grid gap-3">
+              <div className="grid gap-2">
+                <Skeleton className="w-[15%] h-3" />
+                <Skeleton className="w-[9%] h-3" />
+                <Skeleton className="w-[9%] h-3" />
+                <Skeleton className="w-[9%] h-3" />
+              </div>
+              <div className="grid gap-2">
+                <Skeleton className="w-[15%] h-3" />
+                <Skeleton className="w-[9%] h-3" />
+                <Skeleton className="w-[9%] h-3" />
+                <Skeleton className="w-[9%] h-3" />
+              </div>
+            </div>
+            <div className="grid mx-auto">
+              <Skeleton className="w-[8rem] h-3" />
+              <div className="flex flex-wrap gap-2">
+                {Array.from({ length: 6 }).map((_, idx) => (
+                  <Skeleton className="size-7 rounded-full" key={idx} />
+                ))}
+              </div>
+              <Skeleton className="w-[10rem] h-8" />
+            </div>
+          </div>
         </>
       )}
       {!isLoading && (
@@ -64,6 +90,12 @@ const SingleMoviePage = () => {
           <h1 className="text-3xl lg:text-5xl text-foreground">
             {movie?.title}
           </h1>
+          <div className="flex gap-5 text-muted-foreground">
+            {movie?.release_date && (
+              <span>{getReleaseYear(movie?.release_date)}</span>
+            )}
+            {movie?.runtime && <span>{formatRuntime(movie?.runtime)}</span>}
+          </div>
           <div className="relative aspect-video group">
             <Skeleton className="size-full absolute inset-0 -z-10" />
             <Image
@@ -125,9 +157,9 @@ const SingleMoviePage = () => {
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <Image
-                              src={`https://image.tmdb.org/t/p/w1280${company.logo_path}`}
+                              src={`https://image.tmdb.org/t/p/w500${company.logo_path}`}
                               alt={company.name}
-                              className="size-7 sm:size-10 bg-white rounded-full object-cover"
+                              className="size-7 sm:size-10 bg-white rounded-full object-contain border"
                               height={50}
                               width={50}
                             />
