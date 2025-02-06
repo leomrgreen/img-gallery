@@ -28,7 +28,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} dark antialiased overflow-x-hidden-hidden font-[family-name:var(--font-geist-sans)]`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden-hidden font-[family-name:var(--font-geist-sans)]`}
         >
           <Header />
           <main className="mx-auto max-w-[100rem] grid px-2">{children}</main>
