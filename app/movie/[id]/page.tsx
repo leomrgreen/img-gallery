@@ -8,6 +8,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { API_KEY, BASE_URL, IMAGE_BASE_URL } from "@/lib/constants";
 import { Movie } from "@/lib/types";
 import { formatRuntime, getReleaseYear } from "@/lib/utils";
 import { Star } from "lucide-react";
@@ -18,8 +19,6 @@ import React, { useEffect, useState } from "react";
 const SingleMoviePage = () => {
   const params = useParams();
   const id = params.id;
-  const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-  const BASE_URL = "https://api.themoviedb.org/3";
   const [movie, setMovie] = useState<Movie>();
   const [isLoading, setIsLoading] = useState<Boolean>(true);
 
@@ -51,6 +50,10 @@ const SingleMoviePage = () => {
       {isLoading && (
         <>
           <Skeleton className="w-[30%] h-10" />
+          <div className="flex gap-4">
+            <Skeleton className="w-[5%] h-4" />
+            <Skeleton className="w-[5%] h-4" />
+          </div>
           <Skeleton className="w-full aspect-video" />{" "}
           <div className="grid gap-2">
             <Skeleton className="w-full h-4" />
@@ -99,14 +102,14 @@ const SingleMoviePage = () => {
           <div className="relative aspect-video group">
             <Skeleton className="size-full absolute inset-0 -z-10" />
             <Image
-              src={`https://image.tmdb.org/t/p/w1280${movie?.backdrop_path}`}
+              src={`${IMAGE_BASE_URL}w1280${movie?.backdrop_path}`}
               alt={movie?.title || "Movie backdrop"}
               width={2000}
               height={1000}
               className="object-cover w-full h-full rounded-md lg:group-hover:brightness-[40%] transition-all"
             />
             <Image
-              src={`https://image.tmdb.org/t/p/w1280${movie?.poster_path}`}
+              src={`${IMAGE_BASE_URL}w780${movie?.poster_path}`}
               alt={movie?.title || "alt text"}
               width={250}
               height={550}
@@ -114,7 +117,7 @@ const SingleMoviePage = () => {
             />
 
             <div className="absolute bottom-3 right-3 flex gap-1 items-center text-white bg-black/70 px-2 rounded-sm backdrop-blur-md">
-              <Star className="size-4 text-yellow-400" />
+              <Star className="size-4 text-primary" />
               <p>{parseFloat(movie?.vote_average ?? "0").toFixed(2)}</p>
             </div>
           </div>

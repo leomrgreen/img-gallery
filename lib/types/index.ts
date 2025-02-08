@@ -21,6 +21,7 @@ export type Movie = {
   backdrop_path: string;
   overview: string;
   vote_average: string;
+  vote_count: any;
   spoken_languages: { english_name: string; name: string }[];
   genres: { id: number; name: string }[];
   production_companies: { id: number; logo_path: string; name: string }[];

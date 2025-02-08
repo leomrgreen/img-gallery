@@ -9,15 +9,10 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
-import { Skeleton } from "./ui/skeleton";
 import { Movie } from "@/lib/types";
-import { useRouter } from "next/navigation";
 import CustomSkeleton from "./CustomSkeleton";
 import Link from "next/link";
-
-const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-const BASE_URL = "https://api.themoviedb.org/3";
-const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w780";
+import { API_KEY, BASE_URL, IMAGE_BASE_URL } from "@/lib/constants";
 
 const MovieSection = ({
   title,
@@ -28,7 +23,6 @@ const MovieSection = ({
 }) => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -73,7 +67,7 @@ const MovieSection = ({
               <Link href={`/movie/${movie.id}`} key={movie.id} legacyBehavior>
                 <CarouselItem className="basis-1/2 sm:basis-1/4 xl:basis-1/5 flex items-center">
                   <Image
-                    src={`${IMAGE_BASE_URL}${movie.poster_path}`}
+                    src={`${IMAGE_BASE_URL}w780${movie.poster_path}`}
                     alt={movie.title}
                     width={1920}
                     height={1080}

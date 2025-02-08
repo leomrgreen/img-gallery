@@ -22,36 +22,34 @@ const Header = () => {
               <span className="text-xl ">Movie Gallery</span>
             </Link>
           </div>
+          <div className="flex space-x-4">
+            <Link
+              href="/discover"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                pathname === "/post" ? "text-primary" : "text-muted-foreground"
+              }`}
+            >
+              Discover
+            </Link>
+            <Link
+              href="/top"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                pathname === "/top" ? "text-primary" : "text-muted-foreground"
+              }`}
+            >
+              Top 100
+            </Link>
+            <Link
+              href="/"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                pathname === "/" ? "text-primary" : "text-muted-foreground"
+              }`}
+            >
+              Home
+            </Link>
+          </div>
           <div className="flex items-center space-x-4">
             <SignedIn>
-              <Link
-                href="/discover"
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === "/post"
-                    ? "text-primary"
-                    : "text-muted-foreground"
-                }`}
-              >
-                Discover
-              </Link>
-              <Link
-                href="/top"
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === "/post"
-                    ? "text-primary"
-                    : "text-muted-foreground"
-                }`}
-              >
-                Top 100
-              </Link>
-              <Link
-                href="/"
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === "/" ? "text-primary" : "text-muted-foreground"
-                }`}
-              >
-                Home
-              </Link>
               <UserButton afterSignOutUrl="/" />
             </SignedIn>
             <SignedOut>
