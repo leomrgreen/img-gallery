@@ -12,6 +12,7 @@ import Image from "next/image";
 import { Movie } from "@/lib/types";
 import CustomSkeleton from "./CustomSkeleton";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { API_KEY, BASE_URL, IMAGE_BASE_URL } from "@/lib/constants";
 
 const MovieSection = ({
@@ -66,13 +67,22 @@ const MovieSection = ({
             {movies.map((movie) => (
               <Link href={`/movie/${movie.id}`} key={movie.id} legacyBehavior>
                 <CarouselItem className="basis-1/2 sm:basis-1/4 xl:basis-1/5 flex items-center">
-                  <Image
-                    src={`${IMAGE_BASE_URL}w780${movie.poster_path}`}
-                    alt={movie.title}
-                    width={1920}
-                    height={1080}
-                    className="rounded-md h-auto w-full object-contain cursor-pointer"
-                  />
+                  <motion.div
+                    initial={{ opacity: 0, translateY: "1rem" }}
+                    transition={{ duration: 0.3 }}
+                    whileInView={{
+                      translateY: 0,
+                      opacity: 1,
+                    }}
+                  >
+                    <Image
+                      src={`${IMAGE_BASE_URL}w780${movie.poster_path}`}
+                      alt={movie.title}
+                      width={1920}
+                      height={1080}
+                      className="rounded-md h-auto w-full object-contain cursor-pointer"
+                    />
+                  </motion.div>
                 </CarouselItem>
               </Link>
             ))}

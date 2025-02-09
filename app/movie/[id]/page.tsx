@@ -8,21 +8,27 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { WatchListBtn } from "@/components/ui/watchlist-btn";
 import { API_KEY, BASE_URL, IMAGE_BASE_URL } from "@/lib/constants";
 import { Movie } from "@/lib/types";
 import { formatRuntime, getReleaseYear } from "@/lib/utils";
+import { useUser } from "@clerk/nextjs";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const SingleMoviePage = () => {
+  const { user } = useUser();
+  const userId = user?.id ?? "";
   const params = useParams();
   const id = params.id;
-  const [movie, setMovie] = useState<Movie>();
+  const [movie, setMovie] = useState<Movie | null>(null);
+
   const [isLoading, setIsLoading] = useState<Boolean>(true);
 
   useEffect(() => {
+    console.log("användare:", user?.id);
     const fetchMovie = async () => {
       try {
         const res = await fetch(
@@ -181,6 +187,7 @@ const SingleMoviePage = () => {
               </div>
             </div>
           </div>
+          {movie && <WatchListBtn userId={userId} movie={movie} />}
         </>
       )}
     </div>

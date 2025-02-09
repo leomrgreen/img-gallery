@@ -14,10 +14,6 @@ const TopPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
 
-  useEffect(() => {
-    fetchMovies();
-  }, []);
-
   const fetchMovies = async () => {
     setIsLoading(true);
     try {
@@ -25,16 +21,19 @@ const TopPage = () => {
         `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&page=${page}`
       );
       const data = await res.json();
+
       setMovies((prevMovies) => [...prevMovies, ...(data.results as Movie[])]);
-      console.log(data);
-      setHasMore(data.page < data.total_pages);
+
+      setHasMore(page < 5); // Stoppar infinite scroll efter 5 sidor
       setPage((prevPage) => prevPage + 1);
+      console.log(hasMore);
     } catch (err) {
       console.log(err);
     } finally {
       setIsLoading(false);
     }
   };
+
   return (
     <ul className="mx-auto w-full flex flex-col gap-5 border p-2 rounded-lg mt-5 max-w-[40rem]">
       {movies.map((movie, idx) => (
@@ -68,14 +67,16 @@ const TopPage = () => {
           </div>
         </li>
       ))}
-      <InfiniteScroll
-        hasMore={hasMore}
-        next={fetchMovies}
-        isLoading={isLoading}
-        threshold={0}
-      >
-        <Loader2 className="animate-spin size-10" />
-      </InfiniteScroll>
+      <div className={`${hasMore ? "block" : "hidden"}`}>
+        <InfiniteScroll
+          hasMore={hasMore}
+          next={fetchMovies}
+          isLoading={isLoading}
+          threshold={10}
+        >
+          <Loader2 className="animate-spin size-10 mx-auto" />
+        </InfiniteScroll>
+      </div>
     </ul>
   );
 };
