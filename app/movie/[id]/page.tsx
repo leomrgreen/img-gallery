@@ -121,6 +121,11 @@ const SingleMoviePage = () => {
               height={550}
               className="absolute bottom-2 object-contain left-2 max-w-[20rem] rounded-md hidden lg:block shadow-lg opacity-0 group-hover:opacity-100 transition-all"
             />
+            {movie && (
+              <div className="absolute top-0 right-0">
+                <WatchListBtn userId={userId} movie={movie} />
+              </div>
+            )}
 
             <div className="absolute bottom-3 right-3 flex gap-1 items-center text-white bg-black/70 px-2 rounded-sm backdrop-blur-md">
               <Star className="size-4 text-primary" />
@@ -187,7 +192,6 @@ const SingleMoviePage = () => {
               </div>
             </div>
           </div>
-          {movie && <WatchListBtn userId={userId} movie={movie} />}
         </>
       )}
     </div>

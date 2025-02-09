@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Button } from "./button";
 import { supabase } from "@/lib/supabase";
 
+import { BiSolidBookmarkMinus } from "react-icons/bi";
+import { BiBookmarkPlus } from "react-icons/bi";
+
 // Kontrollera om filmen finns i användarens watchlist
 const checkIfInWatchlist = async (userId: string, movieId: number) => {
   const { data, error } = await supabase
@@ -84,22 +87,19 @@ export const WatchListBtn = ({
   const handleClick = async () => {
     if (isInWatchlist) {
       const result = await removeFromWatchlist(userId, movie.id);
-      if (result) {
-        console.log("Movie removed from watchlist:", result);
-        setIsInWatchlist(false); // Uppdatera state för att visa att filmen togs bort
-      }
+      console.log("Movie removed from watchlist:", result);
+      setIsInWatchlist(false); // Uppdatera state för att visa att filmen togs bort
     } else {
       const result = await addToWatchlist(userId, movie);
-      if (result) {
-        console.log("Movie added to watchlist:", result);
-        setIsInWatchlist(true); // Uppdatera state för att visa att filmen lades till
-      }
+
+      console.log("Movie added to watchlist:", result);
+      setIsInWatchlist(true); // Uppdatera state för att visa att filmen lades till
     }
   };
 
   return (
-    <Button onClick={handleClick}>
-      {isInWatchlist ? "Remove from watchlist" : "Add to watchlist"}
+    <Button onClick={handleClick} className="w-fit">
+      {isInWatchlist ? <BiBookmarkPlus /> : <BiSolidBookmarkMinus />}
     </Button>
   );
 };
