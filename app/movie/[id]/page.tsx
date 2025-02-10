@@ -122,7 +122,11 @@ const SingleMoviePage = () => {
               className="absolute bottom-2 object-contain left-2 max-w-[20rem] rounded-md hidden lg:block shadow-lg opacity-0 group-hover:opacity-100 transition-all"
             />
             {movie && (
-              <div className="absolute top-0 right-0">
+              <div
+                className={`absolute top-0 right-0 ${
+                  userId ? "block" : "hidden"
+                }`}
+              >
                 <WatchListBtn userId={userId} movie={movie} />
               </div>
             )}

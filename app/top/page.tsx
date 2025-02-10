@@ -6,7 +6,7 @@ import { Movie } from "@/lib/types";
 import { formatRuntime, formatVoteCount, getReleaseYear } from "@/lib/utils";
 import { Loader2, Star } from "lucide-react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const TopPage = () => {
   const [movies, setMovies] = useState<Movie[]>([]);

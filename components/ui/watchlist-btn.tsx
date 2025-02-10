@@ -48,7 +48,7 @@ export const addToWatchlist = async (
 };
 
 // Ta bort film från användarens watchlist
-const removeFromWatchlist = async (userId: string, movieId: number) => {
+export const removeFromWatchlist = async (userId: string, movieId: number) => {
   const { data, error } = await supabase
     .from("watchlist")
     .delete()
@@ -99,7 +99,7 @@ export const WatchListBtn = ({
 
   return (
     <Button onClick={handleClick} className="w-fit">
-      {isInWatchlist ? <BiBookmarkPlus /> : <BiSolidBookmarkMinus />}
+      {!isInWatchlist ? <BiBookmarkPlus /> : <BiSolidBookmarkMinus />}
     </Button>
   );
 };

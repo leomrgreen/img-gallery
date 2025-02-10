@@ -4,7 +4,8 @@ import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { PenSquare, Tv } from "lucide-react";
+import { Tv } from "lucide-react";
+import { ModeToggle } from "./theme/mode-toggle";
 
 const Header = () => {
   const pathname = usePathname();
@@ -22,7 +23,7 @@ const Header = () => {
               <span className="text-xl ">Movie Gallery</span>
             </Link>
           </div>
-          <div className="flex space-x-4">
+          <div className="flex space-x-4 items-center">
             <Link
               href="/discover"
               className={`text-sm font-medium transition-colors hover:text-primary ${
@@ -47,6 +48,19 @@ const Header = () => {
             >
               Home
             </Link>
+            <SignedIn>
+              <Link
+                href="/watchlist"
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  pathname === "/watchlist"
+                    ? "text-primary"
+                    : "text-muted-foreground"
+                }`}
+              >
+                Watchlist
+              </Link>
+            </SignedIn>
+            <ModeToggle />
           </div>
           <div className="flex items-center space-x-4">
             <SignedIn>
