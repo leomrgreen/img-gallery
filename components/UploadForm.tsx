@@ -19,6 +19,9 @@ import { UploadButton } from "@/lib/uploadthing";
 import { useState } from "react";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { EditorContent } from "@tiptap/react";
 
 export default function UploadForm() {
   const { user } = useUser(); // Get user's information
@@ -40,18 +43,27 @@ export default function UploadForm() {
     profilePicture: user?.imageUrl,
   };
 
+  // Tiptap Editor Setup
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: "", // Default content is empty
+  });
+
   const onSubmit = async (data: {
     title: string;
     imageUrl: string;
     category: string;
   }) => {
     const { title, category } = data;
-    const { data: postData, error } = await supabase.from("posts").insert([
+    const content = editor?.getHTML(); // Get the HTML content from the editor
+
+    const { data: postData, error } = await supabase.from("blog_posts").insert([
       {
         title,
         author,
-        image_url: imageUrl,
+        img_url: imageUrl,
         category,
+        content, // Save the HTML content to Supabase
       },
     ]);
 
@@ -61,6 +73,7 @@ export default function UploadForm() {
       console.log("Post uppladdad:", postData);
       form.reset();
       setImageUrl(null); // Reset local state
+      editor?.commands.clearContent(); // Clear editor content after submit
     }
   };
 
@@ -93,16 +106,17 @@ export default function UploadForm() {
             <FormItem>
               <FormLabel>Category</FormLabel>
               <FormControl>
-                <Input placeholder="Enter post title" {...field} />
+                <Input placeholder="Enter post category" {...field} />
               </FormControl>
               <FormDescription>
-                This will be the title of your post.
+                Select a category for your post.
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
+        {/* Image upload */}
         {imageUrl ? (
           <div className="relative w-full h-full aspect-square p-5">
             <Image
@@ -145,6 +159,12 @@ export default function UploadForm() {
             }}
           />
         )}
+
+        {/* Tiptap Editor for content */}
+
+        <FormLabel>Content</FormLabel>
+
+        <EditorContent editor={editor} />
 
         <Button type="submit" className="w-full">
           Upload

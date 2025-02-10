@@ -17,6 +17,8 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-tooltip": "^1.1.8",
     "@supabase/supabase-js": "^2.48.1",
+    "@tiptap/react": "^2.11.5",
+    "@tiptap/starter-kit": "^2.11.5",
     "@uploadthing/react": "^7.1.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

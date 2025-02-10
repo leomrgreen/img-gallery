@@ -25,12 +25,12 @@ const Header = () => {
           </div>
           <div className="flex space-x-4 items-center">
             <Link
-              href="/discover"
+              href="/blog"
               className={`text-sm font-medium transition-colors hover:text-primary ${
-                pathname === "/post" ? "text-primary" : "text-muted-foreground"
+                pathname === "/blog" ? "text-primary" : "text-muted-foreground"
               }`}
             >
-              Discover
+              Blog
             </Link>
             <Link
               href="/top"
