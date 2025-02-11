@@ -79,7 +79,8 @@ const BlogPage = async () => {
         </div>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
           {otherPosts?.map((post) => (
-            <Card
+            <Link
+              href={`/blog/${post.id}`}
               key={post.id}
               className="flex flex-col border-none shadow-none gap-5 mb-5"
             >
@@ -101,7 +102,7 @@ const BlogPage = async () => {
                 <span>{timeSince(post.created_at)}</span>
               </div>
               <h5 className="text-xl font-semibold">{post.title}</h5>
-            </Card>
+            </Link>
           ))}
         </div>
       </div>
