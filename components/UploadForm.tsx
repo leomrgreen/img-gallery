@@ -22,6 +22,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { EditorContent } from "@tiptap/react";
+import { Bold } from "@tiptap/extension-bold";
+import { Italic } from "@tiptap/extension-italic";
+import { Toggle } from "./ui/toggle";
+import { BoldIcon, ItalicIcon } from "lucide-react";
 
 export default function UploadForm() {
   const { user } = useUser(); // Get user's information
@@ -43,11 +47,23 @@ export default function UploadForm() {
     profilePicture: user?.imageUrl,
   };
 
-  // Tiptap Editor Setup
   const editor = useEditor({
-    extensions: [StarterKit],
-    content: "", // Default content is empty
+    extensions: [
+      StarterKit, // Standardfunktioner
+      Bold, // Lägg till fetstil
+      Italic,
+    ],
+    content: "", // Standardinnehåll
   });
+
+  // Funktioner för att trigga varje format
+  const toggleBold = () => {
+    editor?.chain().focus().toggleBold().run();
+  };
+
+  const toggleItalic = () => {
+    editor?.chain().focus().toggleItalic().run();
+  };
 
   const onSubmit = async (data: {
     title: string;
@@ -118,7 +134,7 @@ export default function UploadForm() {
 
         {/* Image upload */}
         {imageUrl ? (
-          <div className="relative w-full h-full aspect-square p-5">
+          <div className="relative w-full max-w-[30rem] mx-auto aspect-video e p-5">
             <Image
               src={imageUrl}
               alt="Uploaded image"
@@ -145,6 +161,7 @@ export default function UploadForm() {
         ) : (
           <UploadButton
             endpoint="imageUploader"
+            className="ut-button:bg-primary ut-button:text-primary-foreground ut-allowed-content:text-muted-foreground"
             onUploadBegin={() => {
               setIsLoading(true);
             }}
@@ -162,8 +179,23 @@ export default function UploadForm() {
 
         {/* Tiptap Editor for content */}
 
-        <FormLabel>Content</FormLabel>
-
+        <FormLabel>Blog content</FormLabel>
+        <div className="flex space-x-2 mb-4">
+          <Toggle
+            aria-label="Toggle bold"
+            onClick={toggleBold}
+            variant="outline"
+          >
+            <BoldIcon className="h-4 w-4" />
+          </Toggle>
+          <Toggle
+            aria-label="Toggle italic"
+            onClick={toggleItalic}
+            variant="outline"
+          >
+            <ItalicIcon className="h-4 w-4" />
+          </Toggle>
+        </div>
         <EditorContent editor={editor} />
 
         <Button type="submit" className="w-full">

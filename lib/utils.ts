@@ -30,3 +30,24 @@ export const formatVoteCount = (num: number): string => {
   }
   return num.toString();
 };
+
+export function timeSince(date: string | number | Date): string {
+  const now = new Date();
+  const postDate = new Date(date);
+  const diffInMs = now.getTime() - postDate.getTime(); // Difference in milliseconds
+  const diffInMinutes = Math.floor(diffInMs / (1000 * 60)); // Convert to minutes
+  const diffInHours = Math.floor(diffInMinutes / 60); // Convert to hours
+
+  if (diffInMinutes < 60) {
+    return `${diffInMinutes} minutes ago`;
+  } else if (diffInHours < 24) {
+    return `${diffInHours} hours ago`;
+  } else if (diffInHours < 168) {
+    // Less than 7 days
+    const diffInDays = Math.floor(diffInHours / 24);
+    return `${diffInDays} days ago`;
+  } else {
+    const diffInWeeks = Math.floor(diffInHours / 168);
+    return `${diffInWeeks} weeks ago`;
+  }
+}
