@@ -39,15 +39,15 @@ export function timeSince(date: string | number | Date): string {
   const diffInHours = Math.floor(diffInMinutes / 60); // Convert to hours
 
   if (diffInMinutes < 60) {
-    return `${diffInMinutes} minutes ago`;
+    return `${diffInMinutes} minute${diffInMinutes === 1 ? "" : "s"} ago`;
   } else if (diffInHours < 24) {
-    return `${diffInHours} hours ago`;
+    return `${diffInHours} hour${diffInHours === 1 ? "" : "s"} ago`;
   } else if (diffInHours < 168) {
     // Less than 7 days
     const diffInDays = Math.floor(diffInHours / 24);
-    return `${diffInDays} days ago`;
+    return `${diffInDays} day${diffInDays === 1 ? "" : "s"} ago`;
   } else {
     const diffInWeeks = Math.floor(diffInHours / 168);
-    return `${diffInWeeks} weeks ago`;
+    return `${diffInWeeks} week${diffInWeeks === 1 ? "" : "s"} ago`;
   }
 }
