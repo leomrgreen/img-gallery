@@ -82,7 +82,7 @@ const BlogPage = async () => {
             <Link
               href={`/blog/${post.id}`}
               key={post.id}
-              className="flex flex-col border-none shadow-none gap-5 mb-5"
+              className="flex flex-col border-none shadow-none gap-5 mb-5 hover:scale-105 transition-transform"
             >
               <Image
                 width={1000}
