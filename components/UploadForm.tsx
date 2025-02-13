@@ -25,12 +25,13 @@ import { EditorContent } from "@tiptap/react";
 import { Bold } from "@tiptap/extension-bold";
 import { Italic } from "@tiptap/extension-italic";
 import { Toggle } from "./ui/toggle";
-import { BoldIcon, ItalicIcon } from "lucide-react";
+import { BoldIcon, ItalicIcon, Loader2 } from "lucide-react";
 
 export default function UploadForm() {
-  const { user } = useUser(); // Get user's information
+  const { user } = useUser();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(FormSchema),
@@ -90,6 +91,11 @@ export default function UploadForm() {
       form.reset();
       setImageUrl(null); // Reset local state
       editor?.commands.clearContent(); // Clear editor content after submit
+      setIsSubmitting(true);
+      setTimeout(() => {
+        console.log("ID RECIEVED: ", postData);
+        setIsSubmitting(false);
+      }, 3000);
     }
   };
 
@@ -199,7 +205,7 @@ export default function UploadForm() {
         <EditorContent editor={editor} />
 
         <Button type="submit" className="w-full">
-          Upload
+          {isSubmitting ? <Loader2 className="animate-spin " /> : "Publish"}
         </Button>
       </form>
     </Form>
