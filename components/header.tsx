@@ -49,13 +49,19 @@ const Header = () => {
                 </Link>
               </SheetClose>
               <SheetClose asChild>
-                <Link href="/" className="flex items-center gap-2 p-2 text-xl">
+                <Link
+                  href="/blog"
+                  className="flex items-center gap-2 p-2 text-xl"
+                >
                   <BookImage />
                   <span>Blog</span>
                 </Link>
               </SheetClose>
               <SheetClose asChild>
-                <Link href="/" className="flex items-center gap-2 p-2 text-xl">
+                <Link
+                  href="/top"
+                  className="flex items-center gap-2 p-2 text-xl"
+                >
                   <Rocket />
                   <span>Top 100</span>
                 </Link>
@@ -63,7 +69,7 @@ const Header = () => {
               <SignedIn>
                 <SheetClose asChild>
                   <Link
-                    href="/"
+                    href="/watchlist"
                     className="flex items-center gap-2 p-2 text-xl"
                   >
                     <Bookmark />
