@@ -26,6 +26,15 @@ import { Bold } from "@tiptap/extension-bold";
 import { Italic } from "@tiptap/extension-italic";
 import { Toggle } from "./ui/toggle";
 import { BoldIcon, ItalicIcon, Loader2 } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 export default function UploadForm() {
   const { user } = useUser();
@@ -121,67 +130,85 @@ export default function UploadForm() {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="category"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Category</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter post category" {...field} />
-              </FormControl>
-              <FormDescription>
-                Select a category for your post.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Image upload */}
-        {imageUrl ? (
-          <div className="relative w-full max-w-[30rem] mx-auto aspect-video e p-5">
-            <Image
-              src={imageUrl}
-              alt="Uploaded image"
-              width={500}
-              height={500}
-              onLoadingComplete={() => {
-                setIsLoading(false);
-              }}
-              className={`absolute inset-0 object-cover aspect-square size-full ${
-                isLoading ? "opacity-0" : "opacity-100"
-              }`}
-            />
-            {isLoading && (
-              <Skeleton className="absolute inset-0 object-cover aspect-square size-full" />
+        <div className="grid sm:grid-cols-2 gap-5 items-center justify-center">
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category</FormLabel>
+                <FormControl>
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger className="w-[20rem]">
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="Movie">Movie</SelectItem>
+                        <SelectItem value="Show">Show</SelectItem>
+                        <SelectItem value="Netflix">Netflix</SelectItem>
+                        <SelectItem value="Random">Random</SelectItem>
+                        <SelectItem value="Review">Review</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormDescription>
+                  Select a category for your post.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
             )}
-            <Button
-              variant="destructive"
-              onClick={() => setImageUrl(null)}
-              className="absolute top-2 right-2"
-            >
-              Remove
-            </Button>
-          </div>
-        ) : (
-          <UploadButton
-            endpoint="imageUploader"
-            className="ut-button:bg-primary ut-button:text-primary-foreground ut-allowed-content:text-muted-foreground"
-            onUploadBegin={() => {
-              setIsLoading(true);
-            }}
-            onClientUploadComplete={(res) => {
-              const uploadedImageUrl = res[0]?.url || "";
-              setImageUrl(uploadedImageUrl);
-              form.setValue("imageUrl", uploadedImageUrl);
-              console.log("Files uploaded: ", res);
-            }}
-            onUploadError={(error: Error) => {
-              console.log(error);
-            }}
           />
-        )}
+
+          {/* Image upload */}
+          {imageUrl ? (
+            <div className="relative w-full max-w-[30rem] mx-auto aspect-video e p-5">
+              <Image
+                src={imageUrl}
+                alt="Uploaded image"
+                width={500}
+                height={500}
+                onLoadingComplete={() => {
+                  setIsLoading(false);
+                }}
+                className={`absolute inset-0 object-cover aspect-square size-full ${
+                  isLoading ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              {isLoading && (
+                <Skeleton className="absolute inset-0 object-cover aspect-square size-full" />
+              )}
+              <Button
+                variant="destructive"
+                onClick={() => setImageUrl(null)}
+                className="absolute top-2 right-2"
+              >
+                Remove
+              </Button>
+            </div>
+          ) : (
+            <div className="grid gap-3">
+              <FormLabel>Image</FormLabel>
+              <UploadButton
+                endpoint="imageUploader"
+                className="ut-button:bg-primary w-fit ut-button:text-primary-foreground ut-allowed-content:text-muted-foreground"
+                onUploadBegin={() => {
+                  setIsLoading(true);
+                }}
+                onClientUploadComplete={(res) => {
+                  const uploadedImageUrl = res[0]?.url || "";
+                  setImageUrl(uploadedImageUrl);
+                  form.setValue("imageUrl", uploadedImageUrl);
+                  console.log("Files uploaded: ", res);
+                }}
+                onUploadError={(error: Error) => {
+                  console.log(error);
+                }}
+              />
+            </div>
+          )}
+        </div>
 
         {/* Tiptap Editor for content */}
 

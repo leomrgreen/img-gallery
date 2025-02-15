@@ -3,7 +3,7 @@ import React from "react";
 
 const PostPage = () => {
   return (
-    <section className="p-5 rounded-md w-full max-w-full mx-auto min-h-screen items-center flex justify-center">
+    <section className="p-5 rounded-md w-full max-w-[70rem] mx-auto min-h-screen items-center flex justify-center">
       <UploadForm />
     </section>
   );
