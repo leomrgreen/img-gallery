@@ -35,12 +35,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { useRouter } from "next/navigation";
 
 export default function UploadForm() {
   const { user } = useUser();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   const form = useForm({
     resolver: zodResolver(FormSchema),
@@ -83,15 +85,19 @@ export default function UploadForm() {
     const { title, category } = data;
     const content = editor?.getHTML(); // Get the HTML content from the editor
 
-    const { data: postData, error } = await supabase.from("blog_posts").insert([
-      {
-        title,
-        author,
-        img_url: imageUrl,
-        category,
-        content, // Save the HTML content to Supabase
-      },
-    ]);
+    const { data: postData, error } = await supabase
+      .from("blog_posts")
+      .insert([
+        {
+          title,
+          author,
+          img_url: imageUrl,
+          category,
+          content, // Save the HTML content to Supabase
+        },
+      ])
+      .select("*")
+      .single();
 
     if (error) {
       console.error("Fel vid uppladdning:", error);
@@ -103,7 +109,7 @@ export default function UploadForm() {
       setIsSubmitting(true);
       setTimeout(() => {
         console.log("ID RECIEVED: ", postData);
-        setIsSubmitting(false);
+        router.push(`/blog/${postData?.id}`);
       }, 3000);
     }
   };

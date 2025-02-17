@@ -54,12 +54,12 @@ const Watchlist = () => {
   };
 
   return (
-    <section>
+    <section className="grid gap-5 pt-5">
       <h1 className="text-6xl">Watchlist</h1>
       {watchListMovies.length <= 0 && (
         <p className="mb-10">This list is empty</p>
       )}
-      <ul className="mx-auto w-full grid grid-cols-3 gap-5">
+      <ul className="mx-auto w-full grid grid-cols-2 sm:grid-cols-4 gap-5">
         <AnimatePresence>
           {watchListMovies.map((movie) => (
             <motion.li

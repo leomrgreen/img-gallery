@@ -104,7 +104,7 @@ const SingleBlogPage = () => {
       />
       <div
         dangerouslySetInnerHTML={{ __html: blogPost.content }}
-        className="prose sm:prose-xl text-foreground/85 prose-headings:text-foreground mx-auto"
+        className="prose sm:prose-xl text-foreground/80 prose-headings:text-foreground mx-auto prose-strong:text-foreground"
       />
     </section>
   );

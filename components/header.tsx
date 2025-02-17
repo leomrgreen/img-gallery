@@ -39,7 +39,7 @@ const Header = () => {
           <SheetTrigger>
             <Menu />
           </SheetTrigger>
-          <SheetContent side="left">
+          <SheetContent side="left" className="flex flex-col justify-between">
             <SheetHeader>
               <SheetTitle>Navigation</SheetTitle>
               <SheetClose asChild>
@@ -78,6 +78,23 @@ const Header = () => {
                 </SheetClose>
               </SignedIn>
             </SheetHeader>
+            <SheetFooter className="flex flex-row items-center justify-between">
+              <ModeToggle />
+              <SignedIn>
+                <SheetClose asChild>
+                  <Link
+                    href="/post"
+                    className={buttonVariants({ variant: "default" })}
+                    style={{
+                      borderRadius: 100,
+                    }}
+                  >
+                    <span>New Article</span>
+                    <Plus />
+                  </Link>
+                </SheetClose>
+              </SignedIn>
+            </SheetFooter>
           </SheetContent>
         </Sheet>
         <div className="flex">
