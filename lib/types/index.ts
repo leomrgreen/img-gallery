@@ -9,7 +9,7 @@ export interface Author {
 export interface Post {
   id: string;
   title: string;
-  image_url: string;
+  img_url: string;
   created_at: string; // Supabase skickar alltid datum som sträng
   author: Author; // Författaren är ett objekt
 }

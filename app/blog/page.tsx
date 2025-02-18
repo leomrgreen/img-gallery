@@ -1,5 +1,6 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import BlogCard from "@/components/ui/blog-card";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { supabase } from "@/lib/supabase";
@@ -72,37 +73,17 @@ const BlogPage = async () => {
         )}
         <div className="flex justify-between items-center">
           <h2 className="text-5xl font-semibold">Latest news</h2>
-          <Button variant="ghost">
+          <Link
+            href="/blog/all"
+            className={buttonVariants({ variant: "ghost" })}
+          >
             <span>See all</span>
             <ArrowRight />
-          </Button>
+          </Link>
         </div>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
           {otherPosts?.map((post) => (
-            <Link
-              href={`/blog/${post.id}`}
-              key={post.id}
-              className="flex flex-col border-none shadow-none gap-5 mb-5 hover:scale-105 transition-transform"
-            >
-              <Image
-                width={1000}
-                height={1000}
-                src={post.img_url}
-                alt={post.title}
-                className="aspect-square object-cover rounded-lg border"
-              />
-              <div className="flex items-center text-sm text-muted-foreground gap-2">
-                <div className="flex items-center gap-1">
-                  <Avatar className="size-6 border">
-                    <AvatarImage src={post.author.profilePicture} />
-                  </Avatar>
-                  <span>{post.author.name}</span>
-                </div>
-                <span className="size-1 bg-muted-foreground rounded-full" />
-                <span>{timeSince(post.created_at)}</span>
-              </div>
-              <h5 className="text-xl font-semibold">{post.title}</h5>
-            </Link>
+            <BlogCard post={post} key={post.id} />
           ))}
         </div>
       </div>
