@@ -4,8 +4,8 @@ import { supabase } from "@/lib/supabase";
 
 import { BiSolidBookmarkMinus } from "react-icons/bi";
 import { BiBookmarkPlus } from "react-icons/bi";
+import { BiLoaderAlt } from "react-icons/bi"; // Loader ikon
 
-// Kontrollera om filmen finns i användarens watchlist
 const checkIfInWatchlist = async (userId: string, movieId: number) => {
   const { data, error } = await supabase
     .from("watchlist")
@@ -18,14 +18,9 @@ const checkIfInWatchlist = async (userId: string, movieId: number) => {
     return false;
   }
 
-  if (!data || data.length === 0) {
-    return false;
-  }
-
-  return true;
+  return data && data.length > 0;
 };
 
-// Lägg till film i användarens watchlist
 export const addToWatchlist = async (
   userId: string,
   movie: { id: number; title: string; poster_path: string }
@@ -47,7 +42,6 @@ export const addToWatchlist = async (
   return data;
 };
 
-// Ta bort film från användarens watchlist
 export const removeFromWatchlist = async (userId: string, movieId: number) => {
   const { data, error } = await supabase
     .from("watchlist")
@@ -63,7 +57,6 @@ export const removeFromWatchlist = async (userId: string, movieId: number) => {
   return data;
 };
 
-// Watchlist-knappen
 export const WatchListBtn = ({
   userId,
   movie,
@@ -72,8 +65,8 @@ export const WatchListBtn = ({
   movie: { id: number; title: string; poster_path: string };
 }) => {
   const [isInWatchlist, setIsInWatchlist] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state
 
-  // Kontrollera statusen för om filmen finns i watchlist vid uppstart
   useEffect(() => {
     const checkWatchlistStatus = async () => {
       const exists = await checkIfInWatchlist(userId, movie.id);
@@ -83,23 +76,30 @@ export const WatchListBtn = ({
     checkWatchlistStatus();
   }, [userId, movie.id]);
 
-  // Hantera klick på knappen (lägg till eller ta bort från watchlist)
   const handleClick = async () => {
-    if (isInWatchlist) {
-      const result = await removeFromWatchlist(userId, movie.id);
-      console.log("Movie removed from watchlist:", result);
-      setIsInWatchlist(false); // Uppdatera state för att visa att filmen togs bort
-    } else {
-      const result = await addToWatchlist(userId, movie);
+    if (loading) return; // Förhindra spam-klick
+    setLoading(true);
 
-      console.log("Movie added to watchlist:", result);
-      setIsInWatchlist(true); // Uppdatera state för att visa att filmen lades till
+    if (isInWatchlist) {
+      await removeFromWatchlist(userId, movie.id);
+      setIsInWatchlist(false);
+    } else {
+      await addToWatchlist(userId, movie);
+      setIsInWatchlist(true);
     }
+
+    setLoading(false);
   };
 
   return (
-    <Button onClick={handleClick} className="w-fit">
-      {!isInWatchlist ? <BiBookmarkPlus /> : <BiSolidBookmarkMinus />}
+    <Button onClick={handleClick} className="w-fit" disabled={loading}>
+      {loading ? (
+        <BiLoaderAlt className="animate-spin" />
+      ) : isInWatchlist ? (
+        <BiSolidBookmarkMinus />
+      ) : (
+        <BiBookmarkPlus />
+      )}
     </Button>
   );
 };
