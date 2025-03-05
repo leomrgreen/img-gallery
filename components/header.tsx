@@ -8,6 +8,7 @@ import {
   Book,
   BookImage,
   Bookmark,
+  Edit2,
   Home,
   Menu,
   Plus,
@@ -170,6 +171,16 @@ const Header = () => {
               >
                 <span>New Article</span>
                 <Plus />
+              </Link>
+              <Link
+                href={`/blog/manage`}
+                className={buttonVariants({ variant: "outline" })}
+                style={{
+                  borderRadius: 100,
+                }}
+              >
+                <span>Manage blog</span>
+                <Edit2 />
               </Link>
               <UserButton afterSignOutUrl="/" appearance={{}} />
             </SignedIn>

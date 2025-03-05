@@ -4,7 +4,7 @@ import BlogCard from "@/components/ui/blog-card";
 import InfiniteScroll from "@/components/ui/infinite.scroll";
 import { supabase } from "@/lib/supabase";
 import { Post } from "@/lib/types";
-import { ArrowDown, ArrowUp, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import {
   Select,

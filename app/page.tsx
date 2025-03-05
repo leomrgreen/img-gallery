@@ -1,5 +1,3 @@
-"use client";
-
 import MovieSection from "@/components/MovieSection";
 
 const Home = () => {

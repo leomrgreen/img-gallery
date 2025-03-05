@@ -3,15 +3,16 @@ export interface Author {
   id: string;
   name: string;
   email: string;
-  profilePicture: string; // Om du har en profilbild
+  profilePicture: string;
 }
 
 export interface Post {
   id: string;
   title: string;
   img_url: string;
-  created_at: string; // Supabase skickar alltid datum som sträng
-  author: Author; // Författaren är ett objekt
+  created_at: string;
+  author: Author;
+  category: string;
 }
 
 export type Movie = {
